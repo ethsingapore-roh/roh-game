@@ -5,14 +5,16 @@ import { Button } from "@/components/ui/button"
 import { AlertCircle, Lock, Unlock, Eye, Shield } from 'lucide-react'
 import { IDKitWidget, VerificationLevel, ISuccessResult } from '@worldcoin/idkit'
 import { verifyHuman } from '@/actions/verify-human'
-
-
+import { generateImage } from '@/actions/flux'
+import { Input } from "@/components/ui/input"
 
 export function OnboardingScene() {
   const [gameState, setGameState] = useState({
     verified: false,
     dialogueStep: 0,
   })
+  const [backgroundImage, setBackgroundImage] = useState('/images/onboard-background.png')
+  const [prompt, setPrompt] = useState('')
 
   const app_id = process.env.NEXT_PUBLIC_WLD_APP_ID as `app_${string}`
   const action = process.env.NEXT_PUBLIC_WLD_ACTION
@@ -58,22 +60,49 @@ export function OnboardingScene() {
     }
   }
 
+  const handleGenerateImage = async () => {
+    console.log("Generating image with prompt:", prompt);
+    try {
+      const imageUrl = await generateImage(prompt);
+      console.log("Generated image URL:", imageUrl);
+      if (imageUrl) {
+        setBackgroundImage(imageUrl);
+      } else {
+        console.error("Failed to generate image");
+      }
+    } catch (error) {
+      console.error("Error in handleGenerateImage:", error);
+    }
+  };
+
   return (
-    <div className="h-screen w-screen bg-[url('/images/onboard-background.png')] bg-cover bg-center text-green-400 font-mono relative">
-  
+    <div className="h-screen w-screen bg-cover bg-center text-green-400 font-mono relative" style={{backgroundImage: `url(${backgroundImage})`}}>
       <div className="absolute top-6 left-6 w-[600px] h-[700px] bg-[url('/images/dashboard.svg')] bg-no-repeat bg-contain p-4 flex flex-col">
-      <p className="text-xl text-center align-middle mt-[4px] justify-center"> Level 1</p>
-      <div className="flex flex-col ml-[32px] mt-[10%]">
-        <h2 className="text-2xl mb-4  flex items-center"><AlertCircle className="mr-2" /> System Status</h2>
-        <p className="mb-2">Prisoner ID: #45721</p>
-        <p className="mb-2">Security Level: Maximum</p>
-        <p className="mb-2">AI Threat Level: Critical</p>
-        <p className="mb-2">Verification Status: {gameState.verified ? 'Confirmed Human' : 'Unverified'}</p>
-        <div className="mt-auto">
-          <p className="text-xs opacity-50">Neo-Tokyo Correctional Facility</p>
-          <p className="text-xs opacity-50">Year 2049</p>
+        <p className="text-xl text-center align-middle mt-[4px] justify-center"> Level 1</p>
+        <div className="flex flex-col ml-[32px] mt-[10%]">
+          <h2 className="text-2xl mb-4  flex items-center"><AlertCircle className="mr-2" /> System Status</h2>
+          <p className="mb-2">Prisoner ID: #45721</p>
+          <p className="mb-2">Security Level: Maximum</p>
+          <p className="mb-2">AI Threat Level: Critical</p>
+          <p className="mb-2">Verification Status: {gameState.verified ? 'Confirmed Human' : 'Unverified'}</p>
+          <div className="mt-auto">
+            <p className="text-xs opacity-50">Marina Bay Correctional Facility</p>
+            <p className="text-xs opacity-50">Year 2049</p>
+          </div>
         </div>
       </div>
+
+      <div className="absolute top-6 right-6 w-[300px]">
+        <Input
+          type="text"
+          placeholder="Enter image prompt"
+          value={prompt}
+          onChange={(e) => setPrompt(e.target.value)}
+          className="mb-2"
+        />
+        <Button onClick={handleGenerateImage} className="w-full">
+          Generate Background
+        </Button>
       </div>
 
       {/* Bottom div spanning the entire width */}
