@@ -6,7 +6,6 @@ import InfoPanel from './info-panel'
 import HumanVerification from './human-verification'
 import { GameState } from '@/types/game-state'
 import GenerateImage from './generate-image'
-import { dialogue } from '@/lib/dialogue'
 
 const ButtonSVG1 = ({ isHovered }: { isHovered: boolean }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="272" height="64" viewBox="0 0 272 64" fill="none" className="absolute inset-0">
@@ -32,7 +31,6 @@ export function OnboardingScene() {
     level: 0,
   })
   const [backgroundImage, setBackgroundImage] = useState('/images/onboard-background.png')
-  const [prompt, setPrompt] = useState('')
   const [chatQuery, setChatQuery] = useState<string>('');
   const [dialogue, setDialogue] = useState<string>('');
 
