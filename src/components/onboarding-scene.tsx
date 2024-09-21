@@ -70,7 +70,7 @@ export function OnboardingScene() {
 
   const getRefuseVerificationDialogue = async () => {
     setChatQuery("The player has refuse to verify their identity. Give response accordingly with a tone of system talking. \
-      Game background setting of post-apocalyptic world. Keeping reply short in one line, try to feel like you are talking to someone.");
+      Game background setting of post-apocalyptic world. Keep the reply short in one line, try to feel like you are talking to someone.");
     console.log("chat query:", chatQuery);
     await getDialogue();
   }
@@ -96,11 +96,11 @@ export function OnboardingScene() {
       <div className="absolute bottom-0 left-0 right-0 h-[30%] backdrop-blur-sm bg-black bg-opacity-50 p-4">
         <div className="border border-[#90FE74] rounded-lg p-4 flex flex-col h-full">
           <div className="flex-grow mb-4 overflow-y-auto">
-            <h2 className="text-2xl mb-2 flex items-center"><Eye className="mr-2" /> Incoming Transmission</h2>
+            <h2 className="text-2xl mb-1 flex items-center"><Eye className="mr-1" /> Incoming Transmission</h2>
             <p className="mb-2 text-[26px] text-white uppercase mt-2">{dialogue}</p>
           </div>
           {!gameState.verified && (
-            <div className="mt-auto flex justify-end gap-6 pr-2 pb-2">
+            <div className="mt-auto flex justify-end gap-6 pr-1 pb-1">
               <HumanVerification setGameState={setGameState} handleChoice={handleChoice} gameState={gameState}/>
               <button
                 onClick={() => getRefuseVerificationDialogue()}
@@ -110,21 +110,21 @@ export function OnboardingScene() {
               >
                 <ButtonSVG2 isHovered={hoverRefuse} />
                 <span className={`relative z-10 flex items-center justify-center h-full ${hoverRefuse ? 'text-black' : ''}`}>
-                  <Lock className="mr-2" /> Refuse Verification
+                  <Lock className="mr-1" /> Refuse Verification
                 </span>
               </button>
             </div>
           )}
           {gameState.verified && (
             <div className="text-center">
-              <p className="text-xl text-yellow-400 mb-2">Verification Successful!</p>
+              <p className="text-xl text-[#90FE74] mb-3">Verification Successful!</p>
               <button
                 onMouseEnter={() => setHoverProceed(true)}
                 onMouseLeave={() => setHoverProceed(false)}
                 className="relative w-[272px] h-[64px] text-lg uppercase mx-auto"
               >
                 <ButtonSVG1 isHovered={hoverProceed} />
-                <span className={`relative z-10 flex items-center justify-center h-full ${hoverProceed ? 'text-black' : ''}`}>
+                <span className={`relative z-10 flex items-center justify-center h-full ${hoverProceed ? 'text-[#90FE74]' : 'text-black'}`}>
                   <Unlock className="mr-2" /> Proceed to Freedom
                 </span>
               </button>
