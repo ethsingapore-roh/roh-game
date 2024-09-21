@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
 import { AlertCircle, Lock, Unlock, Eye, Shield } from 'lucide-react'
 import { IDKitWidget, VerificationLevel, ISuccessResult } from '@worldcoin/idkit'
@@ -15,6 +15,8 @@ export function OnboardingScene() {
   })
   const [backgroundImage, setBackgroundImage] = useState('/images/onboard-background.png')
   const [prompt, setPrompt] = useState('')
+  const [chatQuery, setChatQuery] = useState<string>('');
+  const [dialogue, setDialogue] = useState<string>('');
 
   const app_id = process.env.NEXT_PUBLIC_WLD_APP_ID as `app_${string}`
   const action = process.env.NEXT_PUBLIC_WLD_ACTION
@@ -26,12 +28,36 @@ export function OnboardingScene() {
     throw new Error("action is not set in environment variables!")
   }
 
-  const dialogue = [
-    "Psst... hey, you! Yeah, you in the cell. We've hacked into the prison's systems, but we need to make sure you're human before we can let you out.",
-    "The AIs have eyes and ears everywhere. We need to use a secure method to verify your humanity. Have you heard of Worldcoin?",
-    "It's our only shot at beating the machines. We need to know we can trust you. Will you undergo the verification?",
-    "I understand your hesitation, but we can't risk freeing an AI agent. The fate of humanity depends on this. Please, reconsider.",
-  ]
+  const fetchDialogue = async (chatQuery: string) => {
+    try {
+      const response = await fetch('/api/fetch-dialogue', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ chatQuery })
+      });
+      const data = await response.json();
+      console.log(data);
+      return data.result.message; // Adjust based on actual API response structure
+    } catch (error) {
+      console.error('Failed to fetch dialogue:', error);
+      return '';
+    }
+  };
+
+  // API to call AI Agent and get dialogue
+  const getDialogue = async () => {
+    const dialogueData = await fetchDialogue(chatQuery);
+    setDialogue(dialogueData);
+  };
+
+  const getRefuseVerificationDialogue = async () => {
+    setChatQuery("The player has refuse to verify their identity. Give response accordingly with a tone of system talking. \
+      Game background setting of post-apocalyptic world. Keeping reply short in one line, try to feel like you are talking to someone.");
+    console.log("chat query:", chatQuery);
+    await getDialogue();
+  }
 
   const handleChoice = (choice: 'verify' | 'refuse') => {
     if (choice === 'verify') {
@@ -110,7 +136,7 @@ export function OnboardingScene() {
         <div className="border border-green-400 rounded-lg p-4 flex flex-col h-full">
           <div className="flex-grow mb-4 overflow-y-auto">
             <h2 className="text-2xl mb-2 flex items-center"><Eye className="mr-2" /> Incoming Transmission</h2>
-            <p className="mb-2">{dialogue[gameState.dialogueStep]}</p>
+            <p className="mb-2">{dialogue}</p>
           </div>
           {!gameState.verified && (
             <div className="flex justify-between">
@@ -135,7 +161,7 @@ export function OnboardingScene() {
                   </Button>
                 )}
               </IDKitWidget>
-              <Button onClick={() => handleChoice('refuse')} className="bg-red-700 hover:bg-red-600">
+              <Button onClick={() => getRefuseVerificationDialogue()} className="bg-red-700 hover:bg-red-600">
                 <Lock className="mr-2" /> Refuse Verification
               </Button>
             </div>
