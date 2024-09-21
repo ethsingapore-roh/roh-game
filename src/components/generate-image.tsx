@@ -33,9 +33,9 @@ export default function GenerateImage({ setBackgroundImage }: { setBackgroundIma
                             'anime character in a style of a cyberpunk, sci-fi, anime, retro-futuristic-themed city in back ground, in the style of Katsuhiro Otomo and Jean Giraud, dark bright colors, ultra detailed, best quality, high resolution, only use the scenery descriptions',
                     )
                 }
-                className='mb-2'
+                className='mb-2 hidden'
             />
-            <Button onClick={handleGenerateImage} className='w-full'>
+            <Button onClick={handleGenerateImage} className='hidden w-full'>
                 Generate Background
             </Button>
         </>

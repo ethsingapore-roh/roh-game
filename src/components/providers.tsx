@@ -32,10 +32,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
             }}>
             <WagmiProvider config={config}>
                 <QueryClientProvider client={queryClient}>
-                    <DynamicWagmiConnector>
-                        <DynamicWidget />
-                        {children}
-                    </DynamicWagmiConnector>
+                    <DynamicWagmiConnector>{children}</DynamicWagmiConnector>
                 </QueryClientProvider>
             </WagmiProvider>
         </DynamicContextProvider>

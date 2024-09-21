@@ -6,45 +6,9 @@ import InfoPanel from './info-panel'
 import HumanVerification from './human-verification'
 import { GameState } from '@/types/game-state'
 import GenerateImage from './generate-image'
-
-const ButtonSVG1 = ({ isHovered }: { isHovered: boolean }) => (
-    <svg
-        xmlns='http://www.w3.org/2000/svg'
-        width='272'
-        height='64'
-        viewBox='0 0 272 64'
-        fill='none'
-        className='absolute inset-0'>
-        <path d='M6 58V31.7988L31.7988 6H266V32.201L240.201 58H6Z' fill={isHovered ? 'black' : '#90FE74'} />
-        <path
-            fillRule='evenodd'
-            clipRule='evenodd'
-            d='M0.248901 29.029V63.7623H242.852L271.583 35.0311V0.124035L29.412 0.124023L0.248901 29.029ZM1.2489 62.7623H242.437L270.583 34.6169V1.12403L29.8236 1.12402L1.2489 29.4458V62.7623Z'
-            fill='#90FE74'
-        />
-    </svg>
-)
-
-const ButtonSVG2 = ({ isHovered }: { isHovered: boolean }) => (
-    <svg
-        xmlns='http://www.w3.org/2000/svg'
-        width='272'
-        height='64'
-        viewBox='0 0 272 64'
-        fill='none'
-        className='absolute inset-0'>
-        <path
-            d='M6 57.876V31.6748L31.7988 5.87598H266V32.077L240.201 57.876H6Z'
-            fill={isHovered ? '#90FE74' : 'black'}
-        />
-        <path
-            fillRule='evenodd'
-            clipRule='evenodd'
-            d='M0 28.9049V63.6383H242.603L271.334 34.9071V1.10865e-05L29.1631 0L0 28.9049ZM1 62.6383H242.189L270.334 34.4929V1.00001L29.5747 1L1 29.3217V62.6383Z'
-            fill='#90FE74'
-        />
-    </svg>
-)
+import { useDynamicContext, useDynamicModals } from '@dynamic-labs/sdk-react-core'
+import { ButtonSVG2 } from './button-2'
+import { ButtonSVG1 } from './button-1'
 
 export function OnboardingScene() {
     const [gameState, setGameState] = useState<GameState>({
@@ -55,20 +19,15 @@ export function OnboardingScene() {
         prisonerId: '',
         level: 0,
     })
+    const [hoverRefuse, setHoverRefuse] = useState(false)
+    const [hoverProceed, setHoverProceed] = useState(false)
+    const [showProceed, setShowProceed] = useState(true)
     const [backgroundImage, setBackgroundImage] = useState('/images/onboard-background.png')
     const [dialogue, setDialogue] = useState<string>(
         "Psst... hey, you! Yeah, you in the cell. We've hacked into the prison's systems, but we need to make sure you're human before we can let you out.",
     )
 
-    const app_id = process.env.NEXT_PUBLIC_WLD_APP_ID as `app_${string}`
-    const action = process.env.NEXT_PUBLIC_WLD_ACTION
-
-    if (!app_id) {
-        throw new Error('app_id is not set in environment variables!')
-    }
-    if (!action) {
-        throw new Error('action is not set in environment variables!')
-    }
+    const { setShowAuthFlow } = useDynamicContext()
 
     const fetchDialogue = async (chatQuery: string) => {
         chatQuery =
@@ -109,9 +68,6 @@ export function OnboardingScene() {
         const dialogueData = await fetchDialogue(refuseChatQuery)
         setDialogue(dialogueData)
     }
-    const [hoverRefuse, setHoverRefuse] = useState(false)
-    const [hoverProceed, setHoverProceed] = useState(false)
-    const [showProceed, setShowProceed] = useState(true)
 
     const handleChoice = (choice: 'verify' | 'refuse') => {
         if (choice === 'verify') {
@@ -122,6 +78,7 @@ export function OnboardingScene() {
 
     const handleProceedClick = () => {
         setShowProceed(false) // Hide the button and message
+        setShowAuthFlow(true)
     }
 
     // Trigger getDialogue when gameState.verified changes to true
@@ -132,7 +89,7 @@ export function OnboardingScene() {
               After that conversation, you become a narrator and tell player the current world situation \
               and generate 4 options for the player to choose from to proceed the game, each option is numbered and seperated by new line') 
         }
-    }, [gameState.verified])
+    }, [gameState])
 
     return (
         <div
