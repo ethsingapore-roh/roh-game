@@ -1,0 +1,6 @@
+[submodule "roh-contracts"]
+	path = roh-contracts
+	url = git@github.com:ethsingapore-roh/roh-contracts
+[submodule "contracts"]
+	path = contracts
+	url = git@github.com:ethsingapore-roh/roh-contracts
