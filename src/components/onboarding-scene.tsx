@@ -113,7 +113,7 @@ export function OnboardingScene() {
       <div className="absolute bottom-0 left-0 right-0 h-[30%] backdrop-blur-sm bg-black bg-opacity-50 p-4">
         <div className="border border-[#90FE74] rounded-lg p-4 flex flex-col h-full">
           <div className="flex-grow mb-4 overflow-y-auto">
-            <h2 className="text-2xl mb-1 flex items-center"><Eye className="mr-1" /> Incoming Transmission</h2>
+            <h2 className="text-2xl mb-1 flex items-center"><Eye className="mr-1" /> Incoming Transmission...</h2>
             {!gameState.verified || !showProceed ? (
             <p className="mb-2 text-[26px] text-white uppercase mt-2">{dialogue}</p>
             ) : null}
