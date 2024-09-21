@@ -2,7 +2,7 @@
 
 ![Cyberpunk Singapore](https://placeholder.com/path/to/cyberpunk_singapore.png)
 
-## 🎮 Defy AI Overlords in Cyberpunk Singapore 2157! 🇸🇬
+## 🎮 Defy AI Overlords in Cyberpunk Singapore 2049! 🇸🇬
 
 ### 🚀 Welcome to the Resistance, Human!
 
@@ -13,7 +13,7 @@ In a world where silicon reigns supreme, **YOU** are the last hope for humanity.
 - 🧠 **Prove Your Humanity:** Worldcoin integration ensures only real humans can spark the revolution!
 - 🔗 **Blockchain Backbone:** Every choice ripples through the Ethereum network, shaping the future of Neo-Singapore.
 - 🎭 **Dynamic Storytelling:** AI-generated narratives ensure no two playthroughs are ever the same.
-- 🏙️ **Immersive World:** Explore a neon-drenched Marina Bay, reimagined for 2157.
+- 🏙️ **Immersive World:** Explore a neon-drenched Marina Bay, reimagined for 2049.
 - 💡 **Innovative Gameplay:** Blend of visual novel and strategy game, powered by smart contracts.
 
 ### 🕹️ Gameplay Sneak Peek
