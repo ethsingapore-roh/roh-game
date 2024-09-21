@@ -55,6 +55,10 @@ const config: Config = {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
+  		},
+  		fontFamily: {
+  			monument: ['var(--font-monument)', 'sans-serif'],
+  			'mona-sans': ['var(--font-mona-sans)', 'sans-serif'],
   		}
   	}
   },
