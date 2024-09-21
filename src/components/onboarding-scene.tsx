@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { AlertCircle, Lock, Unlock, Eye, Shield } from 'lucide-react'
 import { IDKitWidget, VerificationLevel, ISuccessResult } from '@worldcoin/idkit'
 import { verifyHuman } from '@/actions/verify-human'
-import { DialogTitle } from '@radix-ui/react-dialog'
+
 
 
 export function OnboardingScene() {
