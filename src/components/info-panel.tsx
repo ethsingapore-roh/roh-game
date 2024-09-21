@@ -3,7 +3,7 @@ import type { GameState } from "@/types/game-state";
 
 export default function InfoPanel({gameState}: {gameState: GameState}) {
   return (
-<div className="absolute top-6 left-6 w-[400px] h-[500px] bg-[url('/images/dashboard.svg')] bg-no-repeat bg-contain p-4 flex flex-col">
+<div className="absolute top-6 left-6 w-[400px] h-[500px] bg-[url('/images/dashboard1.svg')] bg-no-repeat bg-contain p-4 flex flex-col">
         <p className="text-l relative bottom-[3px] text-center align-middle justify-center"> Level 1</p>
         <div className="flex flex-col ml-[32px] mt-[10%]">
           <h2 className="text-2xl mb-4  flex items-center"><AlertCircle className="mr-2" /> System Status</h2>
