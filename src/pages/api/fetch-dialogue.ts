@@ -13,6 +13,7 @@ async function getChatCompletion(apiKey: string, model: string, chatQuery: strin
             body: JSON.stringify({
                 messages: [{ role: 'user', content: `${chatQuery}` }],
                 model: `${model}`,
+                max_tokens: 300,
             }),
         })
         const responseData = await response.json()
@@ -40,6 +41,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 model,
                 chatQuery: chatQuery,
                 message: '',
+                max_tokens: 300,
             }
             result.message = await getChatCompletion(apiKey, model, chatQuery)
             res.status(200).json({ result })
