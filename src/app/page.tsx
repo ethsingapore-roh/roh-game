@@ -1,5 +1,5 @@
-import GameMenu from '@/components/game-menu';
+import GameMenu from '@/components/game-menu'
 
 export default function Home() {
-  return <GameMenu />;
+    return <GameMenu />
 }

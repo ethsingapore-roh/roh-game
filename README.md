@@ -10,33 +10,36 @@ In a world where silicon reigns supreme, **YOU** are the last hope for humanity.
 
 ### 🌟 Why We're Revolutionizing Gaming at ETHSingapore
 
-- 🧠 **Prove Your Humanity:** Worldcoin integration ensures only real humans can spark the revolution!
-- 🔗 **Blockchain Backbone:** Every choice ripples through the Ethereum network, shaping the future of Neo-Singapore.
-- 🎭 **Dynamic Storytelling:** AI-generated narratives ensure no two playthroughs are ever the same.
-- 🏙️ **Immersive World:** Explore a neon-drenched Marina Bay, reimagined for 2049.
-- 💡 **Innovative Gameplay:** Blend of visual novel and strategy game, powered by smart contracts.
+-   🧠 **Prove Your Humanity:** Worldcoin integration ensures only real humans can spark the revolution!
+-   🔗 **Blockchain Backbone:** Every choice ripples through the Ethereum network, shaping the future of Neo-Singapore.
+-   🎭 **Dynamic Storytelling:** AI-generated narratives ensure no two playthroughs are ever the same.
+-   🏙️ **Immersive World:** Explore a neon-drenched Marina Bay, reimagined for 2049.
+-   💡 **Innovative Gameplay:** Blend of visual novel and strategy game, powered by smart contracts.
 
 ### 🕹️ Gameplay Sneak Peek
 
 1. **Verify Humanity** 🧬
-   - Use Worldcoin to prove you're not an AI spy!
+
+    - Use Worldcoin to prove you're not an AI spy!
 
 2. **Build Your Resistance** 👥
-   - Recruit allies, each an NFT with unique abilities.
+
+    - Recruit allies, each an NFT with unique abilities.
 
 3. **Outsmart the AI** 🧠
-   - Solve puzzles and make choices that outsmart the silicon overlords.
+
+    - Solve puzzles and make choices that outsmart the silicon overlords.
 
 4. **Shape the Future** 🦋
-   - Your decisions affect the global game state, changing the world for all players!
+    - Your decisions affect the global game state, changing the world for all players!
 
 ### 🛠️ Tech Stack of the Future
 
-- 🌐 Next.js & React for a sleek, responsive UI
-- ⛓️ Ethereum for decentralized game logic
-- 👁️ Worldcoin for human verification
-- 🤖 GPT-4 for dynamic story generation
-- 🎨 Midjourney for stunning visuals
+-   🌐 Next.js & React for a sleek, responsive UI
+-   ⛓️ Ethereum for decentralized game logic
+-   👁️ Worldcoin for human verification
+-   🤖 GPT-4 for dynamic story generation
+-   🎨 Midjourney for stunning visuals
 
 ### 🏆 Why We're ETHSingapore's Next Champion
 
@@ -58,11 +61,10 @@ Visit `http://localhost:3000` and prepare to fight for humanity's future!
 
 ### 🌟 The Team Behind the Revolution
 
-- 🧑‍💻 Zk "NeonByte" Lim - Blockchain Wizard
-- 👩‍🎨 Johnathan "PixelRebel" Cruz - UX/UI Mastermind
-- 🧑‍🔬 Henrik "DataJedi" Kvamme - AI & Data Scientist
-- 👩‍💼 Otto "CryptoStrategist" G - Product & Strategy
-
+-   🧑‍💻 Zk "NeonByte" Lim - Blockchain Wizard
+-   👩‍🎨 Johnathan "PixelRebel" Cruz - UX/UI Mastermind
+-   🧑‍🔬 Henrik "DataJedi" Kvamme - AI & Data Scientist
+-   👩‍💼 Otto "CryptoStrategist" G - Product & Strategy
 
 ### 🔮 The Future is Human
 
