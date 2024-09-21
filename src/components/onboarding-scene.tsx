@@ -1,12 +1,12 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Lock, Unlock, Eye } from 'lucide-react'
 import InfoPanel from './info-panel'
 import HumanVerification from './human-verification'
 import { GameState } from '@/types/game-state'
 import GenerateImage from './generate-image'
-import { useDynamicContext, useDynamicModals } from '@dynamic-labs/sdk-react-core'
+import { useDynamicContext } from '@dynamic-labs/sdk-react-core'
 import { ButtonSVG2 } from './button-2'
 import { ButtonSVG1 } from './button-1'
 
@@ -56,10 +56,10 @@ export function OnboardingScene() {
     }
 
     // API to call AI Agent and get dialogue
-    const getDialogue = async (chatQuery: string) => {
+    const getDialogue = useCallback(async (chatQuery: string) => {
         const dialogueData = await fetchDialogue(chatQuery)
         setDialogue(dialogueData)
-    }
+    }, [])
 
     const getRefuseVerificationDialogue = async () => {
         const refuseChatQuery =
@@ -84,12 +84,14 @@ export function OnboardingScene() {
     // Trigger getDialogue when gameState.verified changes to true
     useEffect(() => {
         if (gameState.verified) {
-            getDialogue('Generate post-verification dialogue. Wish the best for the player to start his hard quest. \
+            getDialogue(
+                'Generate post-verification dialogue. Wish the best for the player to start his hard quest. \
               Your reply must be feel like you conversing with the player.\
               After that conversation, you become a narrator and tell player the current world situation \
-              and generate 4 options for the player to choose from to proceed the game, each option is numbered and seperated by new line') 
+              and generate 4 options for the player to choose from to proceed the game, each option is numbered and seperated by new line',
+            )
         }
-    }, [gameState])
+    }, [gameState, getDialogue])
 
     return (
         <div
@@ -109,8 +111,11 @@ export function OnboardingScene() {
                             <Eye className='mr-1' /> Incoming Transmission...
                         </h2>
                         {!gameState.verified || !showProceed ? (
-                            <pre className='mb-2 mt-2 text-[26px] uppercase text-white' style={{whiteSpace: 'pre-wrap',
-                              wordWrap: 'break-word'}}>{dialogue}</pre>
+                            <pre
+                                className='mb-2 mt-2 text-[26px] uppercase text-white'
+                                style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>
+                                {dialogue}
+                            </pre>
                         ) : null}
                     </div>
                     {!gameState.verified && (
