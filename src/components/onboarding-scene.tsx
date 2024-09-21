@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Lock, Unlock, Eye } from 'lucide-react'
 import InfoPanel from './info-panel'
 import HumanVerification from './human-verification'
@@ -31,8 +31,7 @@ export function OnboardingScene() {
     level: 0,
   })
   const [backgroundImage, setBackgroundImage] = useState('/images/onboard-background.png')
-  const [chatQuery, setChatQuery] = useState<string>('');
-  const [dialogue, setDialogue] = useState<string>('');
+  const [dialogue, setDialogue] = useState<string>('Psst... hey, you! Yeah, you in the cell. We\'ve hacked into the prison\'s systems, but we need to make sure you\'re human before we can let you out.');
 
   const app_id = process.env.NEXT_PUBLIC_WLD_APP_ID as `app_${string}`
   const action = process.env.NEXT_PUBLIC_WLD_ACTION
@@ -45,6 +44,12 @@ export function OnboardingScene() {
   }
 
   const fetchDialogue = async (chatQuery: string) => {
+    chatQuery = chatQuery + "\nWe are playing a text-based strategy game. Background setting is this -- \
+      In the year 2157, AI surpasses human intelligence and takes control of the world, wiping out nearly 99% of the human population. \
+      The remaining humans are forced to live in hiding, struggling to survive in a world dominated by machines. \
+      The player takes on the role of a leader, tasked with rebuilding society and creating a new world where humans can coexist with AI.\
+      Imagine the game franchise Fallout, something similar to that. \
+      Your reply must be feel like you conversing with the player. It shouldn't be past maximum 3 phrases in reply."
     try {
       const response = await fetch('/api/fetch-dialogue', {
         method: 'POST',
@@ -63,26 +68,20 @@ export function OnboardingScene() {
   };
 
   // API to call AI Agent and get dialogue
-  const getDialogue = async () => {
+  const getDialogue = async (chatQuery: string) => {
     const dialogueData = await fetchDialogue(chatQuery);
     setDialogue(dialogueData);
   };
 
   const getRefuseVerificationDialogue = async () => {
-<<<<<<< HEAD
-    const refuseChatQuery = "The player has refuse to verify their identity. Give response accordingly with a tone of system talking. \
-      Game background setting of post-apocalyptic world. Keeping reply short in one line, try to feel like you are talking to someone.";
+    const refuseChatQuery = "The player has refuse to verify their identity. Give response accordingly like a system talking. \
+      Let the player know they are the only hope. The response should be only one liner.";
     const dialogueData = await fetchDialogue(refuseChatQuery);
     setDialogue(dialogueData);
-=======
-    setChatQuery("The player has refuse to verify their identity. Give response accordingly with a tone of system talking. \
-      Game background setting of post-apocalyptic world. Keep the reply short in one line, try to feel like you are talking to someone.");
-    console.log("chat query:", chatQuery);
-    await getDialogue();
->>>>>>> 938d519afe4820026eafc2d4fc2063fc6bab62f5
   }
   const [hoverRefuse, setHoverRefuse] = useState(false)
   const [hoverProceed, setHoverProceed] = useState(false)
+  const [showProceed, setShowProceed] = useState(true); 
 
   const handleChoice = (choice: 'verify' | 'refuse') => {
     if (choice === 'verify') {
@@ -90,6 +89,17 @@ export function OnboardingScene() {
       setGameState({ ...gameState, dialogueStep: Math.min(dialogue.length - 1, gameState.dialogueStep + 1) })
     }
   }
+
+  const handleProceedClick = () => {
+    setShowProceed(false); // Hide the button and message
+  };
+
+  // Trigger getDialogue when gameState.verified changes to true
+  useEffect(() => {
+    if (gameState.verified) {
+      getDialogue('Generate post-verification dialogue. Wish the best for the player to start his hard quest'); // Adjust the query as needed
+    }
+  }, [gameState.verified]);
 
   return (
     <div className="h-screen w-screen bg-cover bg-center text-[#90FE74] font-mono relative" style={{backgroundImage: `url(${backgroundImage})`}}>
@@ -104,7 +114,9 @@ export function OnboardingScene() {
         <div className="border border-[#90FE74] rounded-lg p-4 flex flex-col h-full">
           <div className="flex-grow mb-4 overflow-y-auto">
             <h2 className="text-2xl mb-1 flex items-center"><Eye className="mr-1" /> Incoming Transmission</h2>
+            {!gameState.verified || !showProceed ? (
             <p className="mb-2 text-[26px] text-white uppercase mt-2">{dialogue}</p>
+            ) : null}
           </div>
           {!gameState.verified && (
             <div className="mt-auto flex justify-end gap-6 pr-1 pb-1">
@@ -122,10 +134,11 @@ export function OnboardingScene() {
               </button>
             </div>
           )}
-          {gameState.verified && (
+          {gameState.verified && showProceed && (
             <div className="text-center">
               <p className="text-xl text-[#90FE74] mb-3">Verification Successful!</p>
               <button
+                onClick={() => handleProceedClick()}
                 onMouseEnter={() => setHoverProceed(true)}
                 onMouseLeave={() => setHoverProceed(false)}
                 className="relative w-[272px] h-[64px] text-lg uppercase mx-auto"
