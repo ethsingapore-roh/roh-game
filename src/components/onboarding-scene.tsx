@@ -7,6 +7,7 @@ import { IDKitWidget, VerificationLevel, ISuccessResult } from '@worldcoin/idkit
 import { verifyHuman } from '@/actions/verify-human'
 import { DialogTitle } from '@radix-ui/react-dialog'
 
+
 export function OnboardingScene() {
   const [gameState, setGameState] = useState({
     verified: false,
@@ -58,9 +59,12 @@ export function OnboardingScene() {
   }
 
   return (
-    <div className="h-screen w-screen bg-black text-green-400 p-4 grid grid-cols-[1fr,2fr] gap-4 font-mono">
-      <div className="border border-green-400 rounded-lg p-4 flex flex-col">
-        <h2 className="text-2xl mb-4 flex items-center"><AlertCircle className="mr-2" /> System Status</h2>
+    <div className="h-screen w-screen bg-[url('/images/onboard-background.png')] bg-cover bg-center text-green-400 font-mono relative">
+  
+      <div className="absolute top-6 left-6 w-[600px] h-[700px] bg-[url('/images/dashboard.svg')] bg-no-repeat bg-contain p-4 flex flex-col">
+      <p className="text-xl text-center align-middle mt-[4px] justify-center"> Level 1</p>
+      <div className="flex flex-col ml-[32px] mt-[10%]">
+        <h2 className="text-2xl mb-4  flex items-center"><AlertCircle className="mr-2" /> System Status</h2>
         <p className="mb-2">Prisoner ID: #45721</p>
         <p className="mb-2">Security Level: Maximum</p>
         <p className="mb-2">AI Threat Level: Critical</p>
@@ -70,11 +74,11 @@ export function OnboardingScene() {
           <p className="text-xs opacity-50">Year 2049</p>
         </div>
       </div>
-      <div className="grid grid-rows-[2fr,1fr] gap-4">
-        <div className="border border-green-400 rounded-lg p-4 flex items-center justify-center bg-[url('/placeholder.svg?height=400&width=600')] bg-cover bg-center">
-          <p className="text-2xl bg-black bg-opacity-70 p-4 rounded">Cybernetic Detention Center</p>
-        </div>
-        <div className="border border-green-400 rounded-lg p-4 flex flex-col">
+      </div>
+
+      {/* Bottom div spanning the entire width */}
+      <div className="absolute bottom-0 left-0 right-0 h-[30%] bg-black bg-opacity-50 p-4">
+        <div className="border border-green-400 rounded-lg p-4 flex flex-col h-full">
           <div className="flex-grow mb-4 overflow-y-auto">
             <h2 className="text-2xl mb-2 flex items-center"><Eye className="mr-2" /> Incoming Transmission</h2>
             <p className="mb-2">{dialogue[gameState.dialogueStep]}</p>

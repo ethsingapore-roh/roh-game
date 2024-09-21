@@ -1,8 +1,5 @@
-import { OnboardingScene } from "@/components/onboarding-scene";
-import Image from "next/image";
+import GameMenu from '@/components/game-menu';
 
 export default function Home() {
-  return (
-    <OnboardingScene />
-  );
+  return <GameMenu />;
 }
