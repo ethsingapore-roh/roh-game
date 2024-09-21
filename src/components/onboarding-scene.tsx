@@ -44,7 +44,7 @@ export function OnboardingScene() {
         <p className="mb-2">Verification Status: {gameState.verified ? 'Confirmed Human' : 'Unverified'}</p>
         <div className="mt-auto">
           <p className="text-xs opacity-50">Neo-Tokyo Correctional Facility</p>
-          <p className="text-xs opacity-50">Year 2157</p>
+          <p className="text-xs opacity-50">Year 2049</p>
         </div>
       </div>
       <div className="grid grid-rows-[2fr,1fr] gap-4">
