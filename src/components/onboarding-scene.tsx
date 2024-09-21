@@ -6,6 +6,7 @@ import InfoPanel from './info-panel'
 import HumanVerification from './human-verification'
 import { GameState } from '@/types/game-state'
 import GenerateImage from './generate-image'
+import { useDynamicModals } from '@dynamic-labs/sdk-react-core'
 
 const ButtonSVG1 = ({ isHovered }: { isHovered: boolean }) => (
     <svg
@@ -112,6 +113,7 @@ export function OnboardingScene() {
     const [hoverRefuse, setHoverRefuse] = useState(false)
     const [hoverProceed, setHoverProceed] = useState(false)
     const [showProceed, setShowProceed] = useState(true)
+    const { setShowLinkNewWalletModal } = useDynamicModals()
 
     const handleChoice = (choice: 'verify' | 'refuse') => {
         if (choice === 'verify') {
@@ -122,6 +124,7 @@ export function OnboardingScene() {
 
     const handleProceedClick = () => {
         setShowProceed(false) // Hide the button and message
+        setShowLinkNewWalletModal(true)
     }
 
     // Trigger getDialogue when gameState.verified changes to true
