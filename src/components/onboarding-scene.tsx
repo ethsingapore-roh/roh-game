@@ -77,8 +77,8 @@ export function OnboardingScene() {
 
   return (
     <div className="h-screen w-screen bg-cover bg-center text-green-400 font-mono relative" style={{backgroundImage: `url(${backgroundImage})`}}>
-      <div className="absolute top-6 left-6 w-[600px] h-[700px] bg-[url('/images/dashboard.svg')] bg-no-repeat bg-contain p-4 flex flex-col">
-        <p className="text-xl text-center align-middle mt-[4px] justify-center"> Level 1</p>
+      <div className="absolute top-6 left-6 w-[400px] h-[500px] bg-[url('/images/dashboard.svg')] bg-no-repeat bg-contain p-4 flex flex-col">
+        <p className="text-l relative bottom-[3px] text-center align-middle justify-center"> Level 1</p>
         <div className="flex flex-col ml-[32px] mt-[10%]">
           <h2 className="text-2xl mb-4  flex items-center"><AlertCircle className="mr-2" /> System Status</h2>
           <p className="mb-2">Prisoner ID: #45721</p>
