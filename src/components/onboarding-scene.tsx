@@ -2,15 +2,26 @@
 
 import React, { useState } from 'react'
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 import { AlertCircle, Lock, Unlock, Eye, Shield } from 'lucide-react'
+import { IDKitWidget, VerificationLevel, ISuccessResult } from '@worldcoin/idkit'
+import { verifyHuman } from '@/actions/verify-human'
+import { DialogTitle } from '@radix-ui/react-dialog'
 
 export function OnboardingScene() {
   const [gameState, setGameState] = useState({
     verified: false,
-    showModal: false,
     dialogueStep: 0,
   })
+
+  const app_id = process.env.NEXT_PUBLIC_WLD_APP_ID as `app_${string}`
+  const action = process.env.NEXT_PUBLIC_WLD_ACTION
+
+  if (!app_id) {
+    throw new Error("app_id is not set in environment variables!")
+  }
+  if (!action) {
+    throw new Error("action is not set in environment variables!")
+  }
 
   const dialogue = [
     "Psst... hey, you! Yeah, you in the cell. We've hacked into the prison's systems, but we need to make sure you're human before we can let you out.",
@@ -21,17 +32,29 @@ export function OnboardingScene() {
 
   const handleChoice = (choice: 'verify' | 'refuse') => {
     if (choice === 'verify') {
-      setGameState({ ...gameState, showModal: true })
     } else {
       setGameState({ ...gameState, dialogueStep: Math.min(dialogue.length - 1, gameState.dialogueStep + 1) })
     }
   }
 
-  const handleVerification = () => {
-    // Simulate Worldcoin verification process
-    setTimeout(() => {
-      setGameState({ verified: true, showModal: false, dialogueStep: 0 })
-    }, 2000)
+  const onSuccess = async (result: ISuccessResult) => {
+    console.log("Proof received from IDKit, sending to backend:\n", JSON.stringify(result))
+    try {
+      const verificationResult = await verifyHuman({
+        proof: result.proof,
+        merkle_root: result.merkle_root,
+        nullifier_hash: result.nullifier_hash,
+        verification_level: result.verification_level
+      })
+      if (verificationResult.success) {
+        console.log("Human verified successfully")
+        setGameState({ verified: true, dialogueStep: 0 })
+      } else {
+        console.error("Verification failed:", verificationResult.detail)
+      }
+    } catch (error) {
+      console.error("Error during verification:", error)
+    }
   }
 
   return (
@@ -58,9 +81,27 @@ export function OnboardingScene() {
           </div>
           {!gameState.verified && (
             <div className="flex justify-between">
-              <Button onClick={() => handleChoice('verify')} className="bg-green-700 hover:bg-green-600">
-                <Shield className="mr-2" /> Verify with Worldcoin
-              </Button>
+              <IDKitWidget
+                action={action}
+                app_id={app_id}
+                onSuccess={onSuccess}
+                handleVerify={(result) => {
+                  console.log("Proof received in handleVerify:", result)
+                }}
+                verification_level={VerificationLevel.Orb}
+              >
+                {({ open }) => (
+                    <Button 
+                      onClick={() => {
+                        handleChoice('verify')
+                        open()
+                      }} 
+                      className="bg-green-700 hover:bg-green-600"
+                      >
+                    <Shield className="mr-2" /> Verify with World ID
+                  </Button>
+                )}
+              </IDKitWidget>
               <Button onClick={() => handleChoice('refuse')} className="bg-red-700 hover:bg-red-600">
                 <Lock className="mr-2" /> Refuse Verification
               </Button>
@@ -76,22 +117,6 @@ export function OnboardingScene() {
           )}
         </div>
       </div>
-
-      <Dialog open={gameState.showModal} onOpenChange={(open) => setGameState({ ...gameState, showModal: open })}>
-        <DialogContent className="bg-gray-900 text-green-400 border border-green-400">
-          <DialogHeader>
-            <DialogTitle>Worldcoin Verification</DialogTitle>
-            <DialogDescription>
-              Please complete the Worldcoin verification process to confirm your humanity.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="flex justify-center items-center h-40">
-            <Button onClick={handleVerification} className="bg-green-700 hover:bg-green-600">
-              Start Verification
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
     </div>
   )
 }
