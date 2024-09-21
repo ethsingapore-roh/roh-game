@@ -36,8 +36,8 @@ const GameMenu: React.FC = () => {
       <Image
         src="/images/background.png"
         alt="Background"
-        layout="fill"
-        objectFit="cover"
+        fill
+        className="object-cover"
         quality={100}
         priority
       />
