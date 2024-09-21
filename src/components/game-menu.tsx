@@ -41,37 +41,39 @@ const GameMenu: React.FC = () => {
         quality={100}
         priority
       />
-      <div className="MainContainer w-[1552px] h-[987px] flex justify-center items-center absolute bg-black/60 rounded-[54px] border border-[#346631] backdrop-blur-[19.50px]">
-        <Image className="Union w-[299.86px] h-[757.89px] left-[1156.14px] top-[112.11px] absolute" src="/images/right-hero.svg" width={300} height={758} alt="Right hero" />
-        <Image className="Union w-[257.77px] h-[761.76px] left-[97px] top-[112.11px] absolute" src="/images/left-hero.svg" width={258} height={762} alt="Left hero" />
-        <div className="YourLive w-[1114px] h-[295px] left-[219px] top-[293px] absolute text-center">
+      <div className="MainContainer w-[1397px] h-[888px] flex flex-col justify-center items-center absolute bg-black/60 rounded-[49px] border border-[#346631] backdrop-blur-[17.55px]">
+        <Image className="Union w-[270px] h-[682px] right-[87px] top-[101px] absolute" src="/images/right-hero.svg" width={270} height={682} alt="Right hero" />
+        <Image className="Union w-[232px] h-[686px] left-[87px] top-[101px] absolute" src="/images/left-hero.svg" width={232} height={686} alt="Left hero" />
+        <div className="Subtittle text-center text-[#7dff68] text-xl font-normal font-mona-sans capitalize leading-[30px] tracking-[20.20px] mb-8">WELCOME TO</div>
+        <div className="YourLive w-[1114px] text-center mb-6">
           <span className="text-white text-[99.02px] font-normal font-monument leading-[121.79px]">REBIRTH OF </span>
           <span className="text-transparent text-[99.02px] font-monument font-normal leading-[123%] [-webkit-text-stroke:1.4px_#FFF]">HUMANITY</span>
         </div>
-        <div className="Subtittle w-[611px] left-[470.50px] top-[561.50px] absolute text-center text-white text-2xl font-semibold font-mona-sans uppercase leading-9">shaping a future where humans and machines either unite or collide.</div>
-        <div 
-          className="ContinueButton w-[276.10px] h-[69.02px] left-[782.40px] top-[682px] absolute cursor-pointer" 
-          onClick={handleStartGame}
-          onMouseEnter={() => setHoverContinue(true)}
-          onMouseLeave={() => setHoverContinue(false)}
-        >
-          <ButtonSVG1 isHovered={hoverContinue} />
-          <span className={`relative z-10 flex items-center justify-center w-full h-full text-center font-mona-sans text-xl font-bold tracking-[5px] uppercase ${hoverContinue ? 'text-[#90FE74]' : 'text-black'}`}>
-            Continue
-          </span>
+        <div className="Subtittle w-[611px] text-center text-white text-2xl font-semibold font-mona-sans uppercase leading-9 mb-12">shaping a future where humans and machines either unite or collide.</div>
+        <div className="flex justify-center space-x-6">
+          <div 
+            className="NewGameButton w-[276.10px] h-[69.02px] cursor-pointer relative" 
+            onClick={handleStartGame}
+            onMouseEnter={() => setHoverNewGame(true)}
+            onMouseLeave={() => setHoverNewGame(false)}
+          >
+            <ButtonSVG2 isHovered={hoverNewGame} />
+            <span className={`absolute inset-0 flex items-center justify-center text-center font-mona-sans text-xl font-bold tracking-[5px] uppercase ${hoverNewGame ? 'text-black' : 'text-[#90FE74]'}`}>
+              New Game
+            </span>
+          </div>
+          <div 
+            className="ContinueButton w-[276.10px] h-[69.02px] cursor-pointer relative" 
+            onClick={handleStartGame}
+            onMouseEnter={() => setHoverContinue(true)}
+            onMouseLeave={() => setHoverContinue(false)}
+          >
+            <ButtonSVG1 isHovered={hoverContinue} />
+            <span className={`absolute inset-0 flex items-center justify-center text-center font-mona-sans text-xl font-bold tracking-[5px] uppercase ${hoverContinue ? 'text-[#90FE74]' : 'text-black'}`}>
+              Continue
+            </span>
+          </div>
         </div>
-        <div 
-          className="NewGameButton w-[276.10px] h-[69.02px] left-[492.50px] top-[682px] absolute cursor-pointer" 
-          onClick={handleStartGame}
-          onMouseEnter={() => setHoverNewGame(true)}
-          onMouseLeave={() => setHoverNewGame(false)}
-        >
-          <ButtonSVG2 isHovered={hoverNewGame} />
-          <span className={`relative z-10 flex items-center justify-center w-full h-full text-center font-mona-sans text-xl font-bold tracking-[5px] uppercase ${hoverNewGame ? 'text-black' : 'text-[#90FE74]'}`}>
-            New Game
-          </span>
-        </div>
-        <div className="Subtittle left-[612px] top-[235px] absolute text-center text-[#7dff68] text-xl font-normal font-mona-sans capitalize leading-[30px] tracking-[20.20px]">WELCOME TO</div>
       </div>
     </div>
   );
