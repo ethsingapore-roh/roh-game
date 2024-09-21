@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import './globals.css'
+import Providers from '@/components/providers'
 
 const monument = localFont({
     src: '../fonts/MonumentExtended-Regular.otf',
@@ -25,7 +26,9 @@ export default function RootLayout({
 }>) {
     return (
         <html lang='en'>
-            <body className={`${monument.variable} ${monaSans.variable} antialiased`}>{children}</body>
+            <body className={`${monument.variable} ${monaSans.variable} antialiased`}>
+                <Providers>{children}</Providers>
+            </body>
         </html>
     )
 }
