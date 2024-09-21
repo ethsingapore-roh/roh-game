@@ -77,8 +77,8 @@ export function OnboardingScene() {
       In the year 2157, AI surpasses human intelligence and takes control of the world, wiping out nearly 99% of the human population. \
       The remaining humans are forced to live in hiding, struggling to survive in a world dominated by machines. \
       The player takes on the role of a leader, tasked with rebuilding society and creating a new world where humans can coexist with AI.\
-      Imagine the game franchise Fallout, something similar to that. \
-      Your reply must be feel like you conversing with the player. It shouldn't be past maximum 3 phrases in reply."
+      Imagine the game franchise Fallout, something similar to that. It shouldn't be past maximum 3 phrases in reply. \
+      Do not try to format the font"
         try {
             const response = await fetch('/api/fetch-dialogue', {
                 method: 'POST',
@@ -105,7 +105,7 @@ export function OnboardingScene() {
     const getRefuseVerificationDialogue = async () => {
         const refuseChatQuery =
             'The player has refuse to verify their identity. Give response accordingly like a system talking. \
-      Let the player know they are the only hope. The response should be only one liner.'
+      Let the player know they are the only hope. The response should be only one liner. Your reply must be feel like you conversing with the player.'
         const dialogueData = await fetchDialogue(refuseChatQuery)
         setDialogue(dialogueData)
     }
@@ -127,7 +127,10 @@ export function OnboardingScene() {
     // Trigger getDialogue when gameState.verified changes to true
     useEffect(() => {
         if (gameState.verified) {
-            getDialogue('Generate post-verification dialogue. Wish the best for the player to start his hard quest') // Adjust the query as needed
+            getDialogue('Generate post-verification dialogue. Wish the best for the player to start his hard quest. \
+              Your reply must be feel like you conversing with the player.\
+              After that conversation, you become a narrator and tell player the current world situation \
+              and generate 4 options for the player to choose from to proceed the game, each option is numbered and seperated by new line') 
         }
     }, [gameState.verified])
 
@@ -142,14 +145,15 @@ export function OnboardingScene() {
             </div>
 
             {/* Bottom div spanning the entire width */}
-            <div className='absolute bottom-0 left-0 right-0 h-[30%] bg-black bg-opacity-50 p-4 backdrop-blur-sm'>
+            <div className='absolute bottom-0 left-0 right-0 h-[38%] bg-black bg-opacity-50 p-4 backdrop-blur-sm'>
                 <div className='flex h-full flex-col rounded-lg border border-[#90FE74] p-4'>
                     <div className='mb-4 flex-grow overflow-y-auto'>
                         <h2 className='mb-1 flex items-center text-2xl'>
                             <Eye className='mr-1' /> Incoming Transmission...
                         </h2>
                         {!gameState.verified || !showProceed ? (
-                            <p className='mb-2 mt-2 text-[26px] uppercase text-white'>{dialogue}</p>
+                            <pre className='mb-2 mt-2 text-[26px] uppercase text-white' style={{whiteSpace: 'pre-wrap',
+                              wordWrap: 'break-word'}}>{dialogue}</pre>
                         ) : null}
                     </div>
                     {!gameState.verified && (
