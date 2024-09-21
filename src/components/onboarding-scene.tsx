@@ -69,10 +69,10 @@ export function OnboardingScene() {
   };
 
   const getRefuseVerificationDialogue = async () => {
-    setChatQuery("The player has refuse to verify their identity. Give response accordingly with a tone of system talking. \
-      Game background setting of post-apocalyptic world. Keeping reply short in one line, try to feel like you are talking to someone.");
-    console.log("chat query:", chatQuery);
-    await getDialogue();
+    const refuseChatQuery = "The player has refuse to verify their identity. Give response accordingly with a tone of system talking. \
+      Game background setting of post-apocalyptic world. Keeping reply short in one line, try to feel like you are talking to someone.";
+    const dialogueData = await fetchDialogue(refuseChatQuery);
+    setDialogue(dialogueData);
   }
   const [hoverRefuse, setHoverRefuse] = useState(false)
   const [hoverProceed, setHoverProceed] = useState(false)
