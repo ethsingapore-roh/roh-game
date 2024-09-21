@@ -86,7 +86,7 @@ export function OnboardingScene() {
         if (gameState.verified) {
             getDialogue('Generate post-verification dialogue. Wish the best for the player to start his hard quest') // Adjust the query as needed
         }
-    }, [gameState.verified])
+    }, [gameState])
 
     return (
         <div
