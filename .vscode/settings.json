@@ -1,6 +1,6 @@
 {
     "files.associations": {
-        "*.css": "tailwindcss",
+        "*.css": "tailwindcss"
     },
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true
