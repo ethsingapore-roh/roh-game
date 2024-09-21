@@ -142,7 +142,7 @@ export function OnboardingScene() {
             </div>
 
             {/* Bottom div spanning the entire width */}
-            <div className='absolute bottom-0 left-0 right-0 h-[30%] bg-black bg-opacity-50 p-4 backdrop-blur-sm'>
+            <div className='absolute bottom-0 left-0 right-0 h-[38%] bg-black bg-opacity-50 p-4 backdrop-blur-sm'>
                 <div className='flex h-full flex-col rounded-lg border border-[#90FE74] p-4'>
                     <div className='mb-4 flex-grow overflow-y-auto'>
                         <h2 className='mb-1 flex items-center text-2xl'>
