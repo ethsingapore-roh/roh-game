@@ -5,7 +5,7 @@ import { Lock, Unlock, Eye } from 'lucide-react'
 import InfoPanel from './info-panel'
 import HumanVerification from './human-verification'
 import { GameState } from '@/types/game-state'
-import GenerateImage from './generate-image'
+import GenerateImage, { generateImageFromPrompt } from './generate-image'
 import { useDynamicContext } from '@dynamic-labs/sdk-react-core'
 import { ButtonSVG2 } from './button-2'
 import { ButtonSVG1 } from './button-1'
@@ -26,7 +26,7 @@ export function OnboardingScene() {
     const [dialogue, setDialogue] = useState<string>(
         "Psst... hey, you! Yeah, you in the cell. We've hacked into the prison's systems, but we need to make sure you're human before we can let you out.",
     )
-    const [response, setResponse] = useState<{ error?: string } | null>(null);
+    const [response, setResponse] = useState<{ error?: string } | null>(null)
 
     const { setShowAuthFlow } = useDynamicContext()
 
@@ -49,6 +49,14 @@ export function OnboardingScene() {
             })
             const data = await response.json()
             console.log(data)
+            // Generate and set background image based on dialogue
+            const imagePrompt = baseImagePrompt + data.result.message
+            const imageUrl = await generateImageFromPrompt(imagePrompt)
+            console.log('imageUrl', imageUrl)
+            console.log('imagePrompt', imagePrompt)
+            if (imageUrl) {
+                setBackgroundImage(imageUrl)
+            }
             return data.result.message // Adjust based on actual API response structure
         } catch (error) {
             console.error('Failed to fetch dialogue:', error)
@@ -67,21 +75,23 @@ export function OnboardingScene() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(requestBody),
-            });
+            })
 
-            const result = await res.json();
-            setResponse(result);
+            const result = await res.json()
+            setResponse(result)
         } catch (error) {
-            console.error('Error sending transaction:', error);
-            setResponse({ error: 'Failed to send transaction' });
+            console.error('Error sending transaction:', error)
+            setResponse({ error: 'Failed to send transaction' })
         }
-    };
+    }
+
+    const baseImagePrompt = 'A post-apocalyptic world where humans are enslaved by AI in Marina Bay Sands, '
 
     // API to call AI Agent and get dialogue
-    const getDialogue = useCallback(async (chatQuery: string) => {
+    const getDialogue = async (chatQuery: string) => {
         const dialogueData = await fetchDialogue(chatQuery)
         setDialogue(dialogueData)
-    }, [])
+    }
 
     const getRefuseVerificationDialogue = async () => {
         const refuseChatQuery =
@@ -89,7 +99,7 @@ export function OnboardingScene() {
       Let the player know they are the only hope. The response should be only one liner. Your reply must be feel like you conversing with the player.'
         const dialogueData = await fetchDialogue(refuseChatQuery)
         setDialogue(dialogueData)
-        await sendTransaction();
+        // await sendTransaction()
     }
 
     const handleChoice = (choice: 'verify' | 'refuse') => {
