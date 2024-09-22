@@ -26,6 +26,7 @@ export function OnboardingScene() {
     const [dialogue, setDialogue] = useState<string>(
         "Psst... hey, you! Yeah, you in the cell. We've hacked into the prison's systems, but we need to make sure you're human before we can let you out.",
     )
+    const [response, setResponse] = useState<{ error?: string } | null>(null);
 
     const { setShowAuthFlow } = useDynamicContext()
 
@@ -55,6 +56,27 @@ export function OnboardingScene() {
         }
     }
 
+    const sendTransaction = async () => {
+        const requestBody = {
+            data: 'data',
+        }
+        try {
+            const res = await fetch('/api/send-transaction', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestBody),
+            });
+
+            const result = await res.json();
+            setResponse(result);
+        } catch (error) {
+            console.error('Error sending transaction:', error);
+            setResponse({ error: 'Failed to send transaction' });
+        }
+    };
+
     // API to call AI Agent and get dialogue
     const getDialogue = useCallback(async (chatQuery: string) => {
         const dialogueData = await fetchDialogue(chatQuery)
@@ -67,6 +89,7 @@ export function OnboardingScene() {
       Let the player know they are the only hope. The response should be only one liner. Your reply must be feel like you conversing with the player.'
         const dialogueData = await fetchDialogue(refuseChatQuery)
         setDialogue(dialogueData)
+        await sendTransaction();
     }
 
     const handleChoice = (choice: 'verify' | 'refuse') => {
