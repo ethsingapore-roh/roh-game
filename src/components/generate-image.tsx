@@ -3,21 +3,30 @@ import { useState } from 'react'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
 
+export async function generateImageFromPrompt(prompt: string): Promise<string | null> {
+    console.log('Generating image with prompt:', prompt)
+    try {
+        const imageUrl = await generateImage(prompt)
+        console.log('Generated image URL:', imageUrl)
+        if (imageUrl) {
+            return imageUrl
+        } else {
+            console.error('Failed to generate image')
+            return null
+        }
+    } catch (error) {
+        console.error('Error in generateImageFromPrompt:', error)
+        return null
+    }
+}
+
 export default function GenerateImage({ setBackgroundImage }: { setBackgroundImage: (imageUrl: string) => void }) {
     const [prompt, setPrompt] = useState('')
 
     const handleGenerateImage = async () => {
-        console.log('Generating image with prompt:', prompt)
-        try {
-            const imageUrl = await generateImage(prompt)
-            console.log('Generated image URL:', imageUrl)
-            if (imageUrl) {
-                setBackgroundImage(imageUrl)
-            } else {
-                console.error('Failed to generate image')
-            }
-        } catch (error) {
-            console.error('Error in handleGenerateImage:', error)
+        const imageUrl = await generateImageFromPrompt(prompt)
+        if (imageUrl) {
+            setBackgroundImage(imageUrl)
         }
     }
 
