@@ -1,6 +1,6 @@
 # 🤖 Rebirth of Humanity 🌆
 
-![Cyberpunk Singapore](https://placeholder.com/path/to/cyberpunk_singapore.png)
+![Cyberpunk Singapore](https://ethglobal.b-cdn.net/projects/xqvgm/screenshots/48nj3/default.jpg)
 
 ## 🎮 Defy AI Overlords in Cyberpunk Singapore 2049! 🇸🇬
 
